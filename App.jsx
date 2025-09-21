@@ -86,7 +86,7 @@ function App() {
           )}
         </div>
         <footer className="text-center mt-8 text-sm text-gray-500 dark:text-gray-400">
-          <p>Trade Mard Codetrix</p>
+          <p>Trademark Codetrix</p>
         </footer>
       </main>
     </div>

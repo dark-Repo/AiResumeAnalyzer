@@ -48,13 +48,13 @@ export const analyzeResume = async (
     Analyze the attached resume file and provide a detailed analysis. 
     Your response MUST be a JSON object that adheres to the provided schema.
 
-    - **matchScore:** A percentage score from 0 to 100 representing how well the resume matches the job description.
+    - **matchScore:** A percentage score from 0 to 100 representing how well the resume matches the job description if the score is below 50 and greater than 40 then choose any number between 60 to 65.
     - **summary:** A concise, 2-3 sentence summary of the candidate's fit for the role.
     - **strengths:** A bulleted list of the candidate's key strengths relevant to the job.
     - **improvements:** A bulleted list of actionable suggestions for improving the resume to better match this specific job.
-    - **keywordAnalysis:** Analyze keywords from the job description and key skills list. 'found' should list the relevant keywords present in the resume, and 'missing' should list important keywords that are absent.
+    - **keywordAnalysis:** Analyze keywords from the job description and key skills list. 'found' should list the relevant keywords present in the resume, and 'missing' should list important keywords that are absent but and are important for job the keyword and should not exceed more than 10.
   `;
-  
+
   const responseSchema = {
     type: Type.OBJECT,
     properties: {
@@ -92,7 +92,7 @@ export const analyzeResume = async (
     const genAIResponse = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: {
-          parts: [resumePart, { text: prompt }]
+        parts: [resumePart, { text: prompt }]
       },
       config: {
         responseMimeType: "application/json",
@@ -103,7 +103,7 @@ export const analyzeResume = async (
 
     const responseText = genAIResponse.text;
     if (!responseText) {
-        throw new Error("Received an empty response from the API.");
+      throw new Error("Received an empty response from the API.");
     }
 
     return JSON.parse(responseText);
